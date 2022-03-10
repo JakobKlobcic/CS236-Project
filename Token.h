@@ -31,7 +31,14 @@ public:
         return out.str();
     }
 
-    string typeName(TokenType type) const {
+    TokenType getType() const {
+        return type;
+    }
+
+    string getValue(){
+        return value;
+    }
+    static string typeName(TokenType type)  {
         switch (type) {
             case COMMA:
                 return "COMMA";

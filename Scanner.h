@@ -1,6 +1,6 @@
 //
 // Created by jakob on 1/26/2022.
-//
+//DatalogProgram, Rule, Predicate, and Parameter
 
 #ifndef UNTITLED_SCANNER_H
 #define UNTITLED_SCANNER_H
@@ -14,28 +14,35 @@
 class Scanner {
 private:
     string input;
-    vector<Token> inputTokens;
     vector<Token> tokens;
     vector <char> multiCharTokens = {':','\'','#'};
-    vector<char> brakeTokens={' ',',','.','?','(',')','*','+', '\n'};
+    vector<char> brakeTokens={' ',',','.','?','(',')','*','+'};
 public:
     Scanner(const string& input) : input(input) {}
     void scannAllTokens(){
         int line =1;
         int i = 0;
         while(i<(int)(input.size())){
-            cout << input.at(i)<<";<--input.at("<<i<<")"<<endl;
+            if(input.at(i)=='\n'){
+                //cout << "NL"<<";<--input.at("<<i<<")"<<endl;
+            }else{
+                //cout << input.at(i)<<";<--input.at("<<i<<")"<<endl;
+            }
+
             if(input.at(i)=='\n'){
                 //cout<<"newline"<<endl;
-                line++;
+
                 //cout<<"input:" << input.substr(0,i)<< endl;
                 if(i!=0 && (int)(input.size())!=0){
-                    inputTokens.push_back(correctIdentity(input.substr(0,i), line));
+                    tokens.push_back(correctIdentity(input.substr(0,i), line));
                     input.erase(0,i);
+                    //line++;
                     i=0;
                 }else if((int)(input.size())!=0){
                     input.erase(0,1);
+                    line++;
                 }
+                //line++;
                 //cout<<input.size()<<" input after newline:"<<input<<endl;
                 continue;
             }
@@ -48,7 +55,7 @@ public:
                 if(isspace(input.at(i))){
                     //cout<<"space seperation"<<endl;
                     if(i!=0){
-                        inputTokens.push_back(correctIdentity(input.substr(0,i), line));
+                        tokens.push_back(correctIdentity(input.substr(0,i), line));
                         //input = input.substr(i);
                         //input.erase(input.begin()+i);
                     }
@@ -60,29 +67,29 @@ public:
                 }
                 //cout << "--------" << input.substr(i,1) << "----" <<endl;
                 if(i!=0) {
-                    inputTokens.push_back(correctIdentity(input.substr(0,i), line));
+                    tokens.push_back(correctIdentity(input.substr(0,i), line));
                 }
                 switch(tolower(input.at(i))){
                     case ',':
-                        inputTokens.emplace_back(COMMA, input.substr(i,1), line);
+                        tokens.emplace_back(COMMA, input.substr(i,1), line);
                         break;
                     case '.':
-                        inputTokens.emplace_back(PERIOD, input.substr(i,1), line);
+                        tokens.emplace_back(PERIOD, input.substr(i,1), line);
                         break;
                     case '?':
-                        inputTokens.emplace_back(Q_MARK, input.substr(i,1), line);
+                        tokens.emplace_back(Q_MARK, input.substr(i,1), line);
                         break;
                     case '(':
-                        inputTokens.emplace_back(LEFT_PAREN, input.substr(i,1), line);
+                        tokens.emplace_back(LEFT_PAREN, input.substr(i,1), line);
                         break;
                     case ')':
-                        inputTokens.emplace_back(RIGHT_PAREN, input.substr(i,1), line);
+                        tokens.emplace_back(RIGHT_PAREN, input.substr(i,1), line);
                         break;
                     case '*':
-                        inputTokens.emplace_back(MULTIPLY, input.substr(i,1), line);
+                        tokens.emplace_back(MULTIPLY, input.substr(i,1), line);
                         break;
                     case '+':
-                        inputTokens.emplace_back(ADD, input.substr(i,1), line);
+                        tokens.emplace_back(ADD, input.substr(i,1), line);
                         break;
                 }
                 //inputTokens.emplace_back(UNKNOWN, input.substr(i,1), line);
@@ -109,11 +116,11 @@ public:
                         t++;
                     }
                     if(input.at(i+t+1) !='\''){
-                        inputTokens.emplace_back(UNDEFINED, input.substr(i,i+t+2), line);
+                        tokens.emplace_back(UNDEFINED, input.substr(i,i+t+2), line);
                         input.erase(i,i+t+2);
                         continue;
                     }
-                    inputTokens.emplace_back(STRING, input.substr(i,i+t+2), line);
+                    tokens.emplace_back(STRING, input.substr(i,i+t+2), line);
                     input.erase(i,i+t+2);
                     continue;
                 }
@@ -121,23 +128,22 @@ public:
                     //cout<<"colon"<<endl;
                     if(input.at(i+1)=='-'){
                         if(i!=0)
-                            inputTokens.push_back(correctIdentity(input.substr(0,i), line));
-                        inputTokens.emplace_back(COLON_DASH, ":-", line);
+                            tokens.push_back(correctIdentity(input.substr(0,i), line));
+                        tokens.emplace_back(COLON_DASH, ":-", line);
                         input=input.substr(i+2);
 
                         i=0;
                         continue;
                     }else{
                         if(i!=0)
-                            inputTokens.push_back(correctIdentity(input.substr(0,i), line));
-                        inputTokens.emplace_back(COLON, ":", line);
+                            tokens.push_back(correctIdentity(input.substr(0,i), line));
+                        tokens.emplace_back(COLON, ":", line);
                         input=input.substr(i+1);
                         i=0;
                         continue;
                     }
 
-                }
-                else if(input.at(i)=='#'){
+                }else if(input.at(i)=='#'){
                     //cout<<"#"<<endl;
                     if(input.at(i+1)=='|'){
                         //cout<<"#|"<<endl;
@@ -148,13 +154,13 @@ public:
                             k++;
                         }
                         if(input.at(i+k+2) !='|' && input.at(i+k+3)!='#'){
-                            inputTokens.emplace_back(UNDEFINED, input.substr(i,k+4), line);
+                            tokens.emplace_back(UNDEFINED, input.substr(i,k+4), line);
                             input.erase(i,i+k+4);
                             continue;
                         }
                         //cout << input.substr(i,k+4) <<"--" << endl;
                         //if endo of file undefined token
-                        inputTokens.emplace_back(COMMENT, input.substr(i,k+4), line);
+                        tokens.emplace_back(COMMENT, input.substr(i,k+4), line);
                         input.erase(i,i+k+4);
                         //cout << "--" << input <<"--" << endl;
 
@@ -166,9 +172,9 @@ public:
                         while(input.at(i+j)!='\n'&& i+j<(int)(input.size())){
                             j++;
                         }
-                        inputTokens.emplace_back(COMMENT, input.substr(i,j), line);
-                        line++;
-                        input.erase(i,i+j);
+                        tokens.emplace_back(COMMENT, input.substr(i,j), line);
+                        input.erase(i,j);
+                        //line++;
                     }
 
                 }
@@ -179,13 +185,13 @@ public:
 
         }
 
-        inputTokens.emplace_back(EOFF, input.substr(i,1), line+1);
+        tokens.emplace_back(EOFF, input.substr(i,1), line+1);
+        //TODO: print scanner stuff
+        //for(int j = 0; j < (int)(tokens.size()); j++){
+        //    cout<<tokens[j].toString()<<endl;
+        //}
 
-        for(int j = 0; j < (int)(inputTokens.size()); j++){
-            cout<<inputTokens[j].toString()<<endl;
-        }
-
-        cout << "Total Tokens = "<<inputTokens.size()<<endl;
+        //cout << "Total Tokens = "<<tokens.size()<<endl;
 
         /*while(input.size()>0){
             Token t = scanToken();
@@ -211,6 +217,7 @@ public:
 
     }
     //GET THE LINE NUMBER TO WORK
+    /*
     Token multiCharToken(){
         cout << input.at(0) <<endl;
         //Token t = new Token();
@@ -326,7 +333,7 @@ public:
         }
         return {UNDEFINED, "", 1};
     }
-
+*/
     /*string toString(){
         stringstream out;
         for(int i = 0; i<static_cast<int>(tokens.size()); i++){
@@ -334,5 +341,8 @@ public:
         }
         return out.str();
     }*/
+    vector<Token> getTokens(){
+        return tokens;
+    }
 };
 #endif //UNTITLED_SCANNER_H

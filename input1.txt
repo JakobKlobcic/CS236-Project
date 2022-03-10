@@ -1,23 +1,15 @@
 Schemes:
-    f(A,B)
-    g(C,D)
-    r(E,F)
-
+  SK(A,B)
 Facts:
-    f('1','2').
-    f('4','3').
-    g('3','2').
-    r('1','4').
-    r('2','5').
-    r('3','5').
-    r('4','1').
-
+  SK('a','c').
+  SK('b','c').
+  SK('b','b').
+  SK('b','c').
 Rules:
-    r(A,B) :- f(A,X),g(B,X).
-    f(C,D) :- r(D,C).
-    g(E,F) :- f(E,X),r(X,F).
 
 Queries:
-    f('3',Z)?
-    r(Y,'3')?
-    f(W,X)?
+  SK(X,'c')?
+  SK('b','c')?
+  SK(X,X)?
+  SK(X,Y)?
+  SK('c','c')?
