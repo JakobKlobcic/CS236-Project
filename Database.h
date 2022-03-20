@@ -15,11 +15,11 @@ public:
         relations.push_back(relation);
     }
     Database(){}
-    //Database(){}
+
     vector<Relation> getRelations(){
         return relations;
     }
-    void addTuple(string name, Tuple tuple){
+    void addTuples(string name, Tuple tuple){
         for(int i = 0; i<(int)(relations.size()); i++){
             if(name==relations.at(i).getName()){
                 relations.at(i).addTuple(tuple);

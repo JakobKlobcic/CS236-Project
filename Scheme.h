@@ -10,15 +10,16 @@
 
 using namespace std;
 
-class Scheme : public vector<string> {
+class Scheme  {
 
 private:
-    string name;
     vector<string> names;
-
+    string name;
 public:
 
     Scheme(vector<string> names, string name) : names(names), name(name) {}
+
+    //Scheme() {}
 
 
     unsigned size() const {
@@ -35,6 +36,7 @@ public:
     vector<string> getNames(){
         return names;
     }
+
     string toString(){
         stringstream ss;
         ss<<name<<"(";
@@ -47,17 +49,5 @@ public:
         ss<<")";
         return ss.str();
     }
-    /*
-    void rename(string original, string change){
-        for(int i = 0; i<(int)(names.size()); i++){
-            if(names.at(i) == original){
-                names.at(i)=change;
-                break;
-            }
-        }
-    }*/
-
-    // TODO: add more delegation functions as needed
-
 };
 #endif //UNTITLED_SCHEME_H

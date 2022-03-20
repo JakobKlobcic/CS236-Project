@@ -21,8 +21,10 @@ private:
     vector<string> domain;
     bool success = true;
     vector<Token> errorTokens;
-    Database database;
+    //Database database;
 public:
+    DatalogProgram(){}
+
     void addScheme(Scheme s){
         schemes.push_back(s);
     }
@@ -50,9 +52,9 @@ public:
     }
 
     //GETTERS
-    Database getDatabase(){
-        return database;
-    }
+    //Database getDatabase(){
+        //return database;
+    //}
     vector<Scheme> getSchemes(){
         return schemes;
     }

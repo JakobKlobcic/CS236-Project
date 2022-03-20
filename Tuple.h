@@ -34,6 +34,16 @@ public:
         return values < t.values;
     }
 
+    bool compareTuple(Tuple tuple){
+        bool same = true;
+        for (int i = 0; i < (int)(values.size()); ++i) {
+            if(tuple.getValues().at(i)!=values.at(i))
+                same=false;
+        }
+        //cout<<same<<endl;
+        return same;
+    }
+
     string toString(const Scheme& scheme) const {
         stringstream out;
         for (unsigned i = 0; i < size(); i++) {

@@ -62,7 +62,7 @@ build cmake_object_order_depends_target_untitled: phony || CMakeFiles/untitled.d
 
 build CMakeFiles/untitled.dir/main.cpp.obj: CXX_COMPILER__untitled_Debug C$:/Users/jakob/CLionProjects/untitled/main.cpp || cmake_object_order_depends_target_untitled
   DEP_FILE = CMakeFiles\untitled.dir\main.cpp.obj.d
-  FLAGS = -g -std=gnu++14
+  FLAGS = -Wall -g -std=gnu++14
   OBJECT_DIR = CMakeFiles\untitled.dir
   OBJECT_FILE_DIR = CMakeFiles\untitled.dir
 
@@ -75,7 +75,7 @@ build CMakeFiles/untitled.dir/main.cpp.obj: CXX_COMPILER__untitled_Debug C$:/Use
 # Link the executable untitled.exe
 
 build untitled.exe: CXX_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.cpp.obj
-  FLAGS = -g
+  FLAGS = -Wall -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\untitled.dir
   POST_BUILD = cd .

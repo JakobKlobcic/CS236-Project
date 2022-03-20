@@ -31,7 +31,11 @@ public:
     }
 
     vector<string> getNames(){
-        return idList;
+        vector<string> params;
+        for(int i = 0; i< (int(parameters.size())); i++){
+            params.push_back(parameters.at(i).toString());
+        }
+        return params;
     }
 
     string toString(){

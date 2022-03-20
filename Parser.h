@@ -33,6 +33,7 @@ class Parser {
             }
             //cout << tokens.size()<<endl;
             datalogProgram();
+            Interpreter interpreter = Interpreter(program);
         }
 
         TokenType tokenType() const {
@@ -89,7 +90,7 @@ class Parser {
                 currentPredicateList.clear();
                 program.setDomain(domain);
                 domain.clear();
-                Interpreter interpreter = Interpreter(program);
+
             } else {
                 //lambda
             }

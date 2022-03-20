@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
     string input1;
     //TODO: prevent scanner from entering coments into token vector
     string filename(argv[1]);
-    string file_contents;
 //
     input1 = readFileIntoString(filename/*"../input1.txt"*/);
 //
@@ -33,6 +32,8 @@ int main(int argc, char *argv[]) {
         cout << tokens.at(i).toString()<<endl;
     }*/
     Parser p = Parser(tokens);
+
+
     /*
     vector<string> names = { "ID", "Name", "Major" };
 
